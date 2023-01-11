@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         cameraForward = cameraForward.normalized;
         cameraRight = cameraRight.normalized;
 
-        transform.Translate((cameraForward * vertical + cameraRight * horizontal) * Time.deltaTime * m_speed);
+        transform.Translate(m_speed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
 
         if (Input.GetKeyDown(KeyCode.Space) && m_isGrounded)
         {
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            Sprint();
+            transform.Translate(m_sprintSpeed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -84,11 +84,6 @@ public class PlayerMovement : MonoBehaviour
 
         m_isGrounded = false;
         m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
-    }
-
-    public void Sprint()
-    {
-        transform.Translate(m_sprintSpeed * Time.deltaTime * transform.forward);
     }
 
     public void EnterCrouch()

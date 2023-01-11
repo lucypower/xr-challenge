@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class StartingCorridorText : MonoBehaviour
 {
-    public GameObject m_text1;
-    public GameObject m_text2;
+    public GameObject[] m_gameObject;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            m_text1.SetActive(false);
-            m_text2.SetActive(true);
+            Debug.Log("Hit!");
+
+            m_gameObject[0].SetActive(false);
+            m_gameObject[1].SetActive(true);
         }
     }
 }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerPickup : MonoBehaviour
 {
-    PlayerScore m_playerScore;
-
     public GameObject m_pickupPrefab;
     Pickup m_pickup;
 
+    PlayerStats m_playerStats;
+
     private void Start()
     {
-        m_playerScore = GetComponent<PlayerScore>();
         m_pickup = m_pickupPrefab.GetComponent<Pickup>();
+        m_playerStats = GetComponent<PlayerStats>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +23,9 @@ public class PlayerPickup : MonoBehaviour
 
             m_pickup.GetPickedUp(); // need to work out why iscollected is setting to true before the handle function
 
-            m_playerScore.m_score += m_pickup.ScoreValue;
+            m_playerStats.m_score += m_pickup.ScoreValue;
+            m_playerStats.m_pickupsCollected++;
+
             //Destroy(other.gameObject);
         }
     }
