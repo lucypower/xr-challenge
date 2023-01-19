@@ -6,7 +6,11 @@ using UnityEngine;
 public class GameOverText : MonoBehaviour
 {
     public GameObject m_gameOver;
-    public TMP_Text m_text;
+    public GameObject m_gameOverNoLives;
+    public TMP_Text m_text1;
+    public TMP_Text m_text2;
+
+    [HideInInspector] public bool m_isPaused = false;
 
     public PlayerStats m_playerStats;
 
@@ -17,10 +21,25 @@ public class GameOverText : MonoBehaviour
 
     public void GameOver()
     {
-        --m_playerStats.m_lives;
-        m_gameOver.SetActive(true);
+        m_isPaused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0;
 
-        m_text.text = "You have " + m_playerStats.m_lives + " lives remaining";
+        --m_playerStats.m_lives;
+
+        if (m_playerStats.m_lives > 0)
+        {
+            m_gameOver.SetActive(true);
+
+            m_text1.text = "You have " + m_playerStats.m_lives + " lives remaining";
+        }
+        else
+        {
+            m_gameOverNoLives.SetActive(true);
+
+            m_text2.text = "You have no lives remaining!";
+        }
     }
 }

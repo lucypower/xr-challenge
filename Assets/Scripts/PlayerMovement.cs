@@ -20,12 +20,20 @@ public class PlayerMovement : MonoBehaviour
     Vector3 m_crouchScale;
     bool m_isCrouching;
 
+    [SerializeField] private GameOverText m_gameOverText;
+    [SerializeField] private GameObject m_gameOver;
+
     private void Start()
     {
+        m_gameOverText = m_gameOver.GetComponent<GameOverText>();
+
         m_RB = GetComponent<Rigidbody>();
         m_scale = GetComponent<Transform>().localScale;
 
         m_crouchScale = new Vector3(m_scale.x, m_scale.y / 2, m_scale.z);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -37,7 +45,10 @@ public class PlayerMovement : MonoBehaviour
         m_mouseRotation.y += Input.GetAxis("Mouse Y") * m_sensitivity;
         m_mouseRotation.y = Mathf.Clamp(m_mouseRotation.y, -45, 45);
 
-        m_cameraDolly.rotation = Quaternion.Euler(-m_mouseRotation.y, m_mouseRotation.x, 0);
+        if (!m_gameOverText.m_isPaused)
+        {
+            m_cameraDolly.rotation = Quaternion.Euler(-m_mouseRotation.y, m_mouseRotation.x, 0);
+        }
 
         Vector3 cameraForward = m_camera.forward;
         Vector3 cameraRight = m_camera.right;

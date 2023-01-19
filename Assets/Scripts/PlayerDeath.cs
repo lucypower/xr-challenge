@@ -7,19 +7,32 @@ public class PlayerDeath : MonoBehaviour
 {
     [SerializeField] private GameObject m_gameOver;
     GameOverText m_gameOverText;
+    PlayerStats m_playerStats;
 
-    [SerializeField] private TMP_Text m_text;
+    [SerializeField] private TMP_Text m_text1;
+    [SerializeField] private TMP_Text m_text2;
 
     private void Awake()
     {
         m_gameOverText = m_gameOver.GetComponent<GameOverText>();
+        m_playerStats = GetComponent<PlayerStats>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Water"))
+        if (!collision.gameObject.CompareTag("Ground"))
         {
-            WaterDeath();
+            if (m_playerStats.m_lives > 1)
+            {
+                if (collision.gameObject.CompareTag("Water"))
+                {
+                    WaterDeath();
+                }
+            }
+            else
+            {
+                EndGameDeath();
+            }
         }
     }
 
@@ -29,11 +42,13 @@ public class PlayerDeath : MonoBehaviour
 
         m_gameOverText.GameOver();
 
-        m_text.text = "You Died From The Water!";
+        m_text1.text = "You Died From The Water!";
+    }
 
-        // stop time
-        // bring up ui that says death and cause of it
-        // decrease lives if that's what I do
-        // function to restart level/respawn player
+    public void EndGameDeath()
+    {
+        m_gameOverText.GameOver();
+
+        m_text2.text = "You Died!";
     }
 }
