@@ -21,6 +21,11 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
+        if (m_pickupsCollected > m_pickupsAvailable.Length)
+        {
+            m_pickupsCollected = m_pickupsAvailable.Length;
+        }
+
         m_scoreText.text = "Score : " + m_score;
 
         m_livesText.text = "Lives : " + m_lives;

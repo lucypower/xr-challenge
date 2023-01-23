@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 m_scale;
     Vector3 m_crouchScale;
-    bool m_isCrouching;
+    [HideInInspector] public bool m_isCrouching;
 
     [SerializeField] private GameOverText m_gameOverText;
     [SerializeField] private GameObject m_gameOver;
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.Translate(m_sprintSpeed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
+            //transform.Translate(m_sprintSpeed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
         }
 
         if (Input.GetKeyDown(KeyCode.C))
