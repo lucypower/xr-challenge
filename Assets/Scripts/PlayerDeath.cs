@@ -30,6 +30,11 @@ public class PlayerDeath : MonoBehaviour
                 {
                     WaterDeath();
                 }
+
+                if (collision.gameObject.CompareTag("Enemy"))
+                {
+                    EnemyDeath();
+                }
             }
             else
             {
@@ -72,6 +77,15 @@ public class PlayerDeath : MonoBehaviour
         m_gameOverText.GameOver();
 
         m_text1.text = "You Died From Spikes!";
+    }
+
+    public void EnemyDeath()
+    {
+        Debug.Log("Death");
+
+        m_gameOverText.GameOver();
+
+        m_text1.text = "You Died From The [Enemy]!";
     }
 
     public void EndGameDeath()

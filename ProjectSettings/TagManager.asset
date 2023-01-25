@@ -9,6 +9,8 @@ TagManager:
   - Water
   - GameOverScreen
   - Spike
+  - Waypoint
+  - Enemy
   layers:
   - Default
   - TransparentFX
