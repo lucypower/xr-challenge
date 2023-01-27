@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class PlayerPickup : MonoBehaviour
 {
-    public GameObject m_pickupPrefab;
     Pickup m_pickup;
 
+    public GameObject m_player;
     PlayerStats m_playerStats;
 
     private void Start()
     {
-        m_pickup = m_pickupPrefab.GetComponent<Pickup>();
-        m_playerStats = GetComponent<PlayerStats>();
+        m_pickup = GetComponent<Pickup>();
+        m_playerStats = m_player.GetComponent<PlayerStats>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pickup"))
+        if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Pickup Collision");
 
-            m_pickup.GetPickedUp(); // need to work out why iscollected is setting to true before the handle function
+            m_pickup.GetPickedUp(); 
 
-            m_playerStats.m_score += m_pickup.ScoreValue;
-            m_playerStats.m_pickupsCollected++;
+            m_playerStats.m_score += m_pickup.ScoreValue; // need something around here ish to stop score increasing and pickups collected when running over the object
+            m_playerStats.m_pickupsCollected++; // maybe a coroutine when collected then set active false a small while later
 
-            //Destroy(other.gameObject);
         }
     }
+
+
 }
