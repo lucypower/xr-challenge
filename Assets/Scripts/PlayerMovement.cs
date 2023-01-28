@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         m_RB = GetComponent<Rigidbody>();
         m_scale = GetComponent<Transform>().localScale;
 
+        m_RB.velocity = Vector3.forward * 9;
         m_crouchScale = new Vector3(m_scale.x, m_scale.y / 2, m_scale.z);
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -61,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
         transform.Translate(m_speed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
 
+        //m_RB.AddForce((m_speed * (cameraForward * vertical + cameraRight * horizontal)), ForceMode.Impulse);
+
         if (Input.GetKeyDown(KeyCode.Space) && m_isGrounded)
         {
             Jump();
@@ -69,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             //transform.Translate(m_sprintSpeed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
+            m_RB.AddForce((m_sprintSpeed * (cameraForward * vertical + cameraRight * horizontal)), ForceMode.Impulse);
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -94,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Jump");
 
         m_isGrounded = false;
-        m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+        m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Acceleration);
     }
 
     public void EnterCrouch()

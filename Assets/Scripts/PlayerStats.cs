@@ -21,15 +21,15 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        if (m_pickupsCollected > m_pickupsAvailable.Length)
+        if (m_pickupsCollected > (m_pickupsAvailable.Length + 1))
         {
-            m_pickupsCollected = m_pickupsAvailable.Length;
+            m_pickupsCollected = (m_pickupsAvailable.Length + 1);
         }
 
         m_scoreText.text = "Score : " + m_score;
 
         m_livesText.text = "Lives : " + m_lives;
 
-        m_pickupsText.text = m_pickupsCollected + " / " + m_pickupsAvailable.Length;
+        m_pickupsText.text = m_pickupsCollected + " / " + (m_pickupsAvailable.Length + 1);
     }
 }
