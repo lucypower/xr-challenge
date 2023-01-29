@@ -29,7 +29,7 @@ public class FinishGameTrigger : MonoBehaviour
             }
             else
             {
-                m_text.text = "Come back when you've collected all the pickups!";
+                m_text.text = "Come back when you've collected all the stars!";
             }
         }
     }

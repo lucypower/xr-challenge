@@ -166,9 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39aa54b20759644ea47faca255803af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_score: 0
+  m_score: 400
   m_lives: 2
-  m_pickupsCollected: 0
+  m_pickupsCollected: 4
   m_scoreText: {fileID: 0}
   m_livesText: {fileID: 0}
   m_pickupsText: {fileID: 0}

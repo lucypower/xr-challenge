@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float m_speed;
     public float m_sprintSpeed;
+    public float m_crouchSpeed;
 
     public float m_sensitivity;
     public Transform m_cameraDolly;
@@ -23,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameOverText m_gameOverText;
     [SerializeField] private GameObject m_gameOver;
 
+    Vector3 m_direction;
+
     private void Start()
     {
         m_gameOverText = m_gameOver.GetComponent<GameOverText>();
@@ -30,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         m_RB = GetComponent<Rigidbody>();
         m_scale = GetComponent<Transform>().localScale;
 
-        m_RB.velocity = Vector3.forward * 9;
+        //m_RB.velocity = Vector3.forward * 12;
         m_crouchScale = new Vector3(m_scale.x, m_scale.y / 2, m_scale.z);
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -59,29 +62,33 @@ public class PlayerMovement : MonoBehaviour
 
         cameraForward = cameraForward.normalized;
         cameraRight = cameraRight.normalized;
+        m_direction = (cameraForward * vertical + cameraRight * horizontal);
 
-        transform.Translate(m_speed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
-
-        //m_RB.AddForce((m_speed * (cameraForward * vertical + cameraRight * horizontal)), ForceMode.Impulse);
+        transform.Translate(m_speed * Time.deltaTime * m_direction);
+        //m_RB.MovePosition(transform.position + (m_speed * Time.deltaTime * m_direction));
+        
 
         if (Input.GetKeyDown(KeyCode.Space) && m_isGrounded)
         {
             Jump();
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && !m_isCrouching)
         {
-            //transform.Translate(m_sprintSpeed * Time.deltaTime * (cameraForward * vertical + cameraRight * horizontal));
-            m_RB.AddForce((m_sprintSpeed * (cameraForward * vertical + cameraRight * horizontal)), ForceMode.Impulse);
+            Debug.Log("Sprint");
+
+            transform.Translate(m_sprintSpeed * Time.deltaTime * m_direction);
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
-            EnterCrouch();
+            transform.Translate(m_crouchSpeed * Time.deltaTime * m_direction);
+            Crouch();
         }
-        else if (Input.GetKeyUp(KeyCode.C))
+        else
         {
-            ExitCrouch();
+            m_isCrouching = false;
+            transform.localScale = m_scale;
         }
     }
 
@@ -101,15 +108,11 @@ public class PlayerMovement : MonoBehaviour
         m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Acceleration);
     }
 
-    public void EnterCrouch()
+    public void Crouch()
     {
         m_isCrouching = true;
-        transform.localScale = m_crouchScale;
+        transform.localScale = m_crouchScale;        
     }
 
-    public void ExitCrouch()
-    {
-        m_isCrouching = false;
-        transform.localScale = m_scale;
-    }
+    
 }
