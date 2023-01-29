@@ -85,7 +85,7 @@ public class PlayerDeath : MonoBehaviour
 
         m_gameOverText.GameOver();
 
-        m_text1.text = "You Died From The [Enemy]!";
+        m_text1.text = "You Died From The Angry Child!";
     }
 
     public void EndGameDeath()

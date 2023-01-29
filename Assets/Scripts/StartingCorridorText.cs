@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StartingCorridorText : MonoBehaviour
 {
-    public GameObject[] m_gameObject;
+    public GameObject m_gameObject;
+    public GameObject m_gameObject2;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,8 +13,8 @@ public class StartingCorridorText : MonoBehaviour
         {
             Debug.Log("Hit!");
 
-            m_gameObject[0].SetActive(false);
-            m_gameObject[1].SetActive(true);
+            m_gameObject.SetActive(false);
+            m_gameObject2.SetActive(true);
         }
     }
 }
